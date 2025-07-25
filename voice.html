@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VR Voice Feedback</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+      color: #333;
+    }
+    h2 {
+      color: #444;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      font-style: italic;
+      color: #222;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>VR Pub Feedback (Voice Input)</h2>
+
+  <div class="section">
+    <p>1. Can you briefly describe any part of the VR pub experience that felt especially realistic or fun?</p>
+    <button onclick="startDictation('q1')">🎤 Speak</button>
+    <p class="result" id="q1"></p>
+  </div>
+
+  <div class="section">
+    <p>2. If you were telling a friend about this virtual pub, what would you say stood out the most?</p>
+    <button onclick="startDictation('q2')">🎤 Speak</button>
+    <p class="result" id="q2"></p>
+  </div>
+
+  <div class="section">
+    <p>3. On a scale of 1 to 10, how would you rate how comfortable you felt in the VR pub?</p>
+    <button onclick="startDictation('q3')">🎤 Speak</button>
+    <p class="result" id="q3"></p>
+  </div>
+
+  <div class="section">
+    <p>4. Now, using a number from 1 to 10, how would you rate your overall enjoyment of the experience?</p>
+    <button onclick="startDictation('q4')">🎤 Speak</button>
+    <p class="result" id="q4"></p>
+  </div>
+
+  <div class="section">
+    <p>5. Say one word that describes your feeling about the VR restaurant.</p>
+    <button onclick="startDictation('q5')">🎤 Speak</button>
+    <p class="result" id="q5"></p>
+  </div>
+
+  <div class="section">
+    <p>6. Say one word to describe how it felt to use your voice to give feedback in VR.</p>
+    <button onclick="startDictation('q6')">🎤 Speak</button>
+    <p class="result" id="q6"></p>
+  </div>
+
+  <script>
+    function startDictation(targetId) {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert("Sorry, your browser doesn't support speech recognition.");
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.start();
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById(targetId).textContent = transcript;
+      };
+
+      recognition.onerror = function(event) {
+        alert("Error occurred: " + event.error);
+      };
+    }
+  </script>
+
+</body>
+</html>
